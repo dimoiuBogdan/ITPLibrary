@@ -1,0 +1,22 @@
+﻿@model Book
+
+<div class="card col-sm-4 col-lg-4 col-md-4">
+    <div class="content">
+        <div class="thumbnail">
+            <img src="@Model.ThumbnailUrl" alt="@Model.Title" />
+        </div>
+        <div class="caption">
+            <h2>
+                <a asp-controller="Book" asp-action="Details" asp-route-id="@Model.BookId">
+                    @Model.Title
+                </a>
+            </h2>
+            <h3>by @Model.Author</h3>
+            <div class="info">
+                <p>@Model.Buyers buyers, @Model.NumberOfPages pages</p>
+                <h3>@Model.Price.ToString("c")</h3>
+            </div>
+            <button class="btn btn-danger">Add To Cart</button>
+        </div>
+    </div>
+</div>

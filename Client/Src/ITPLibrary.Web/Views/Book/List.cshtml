@@ -1,0 +1,14 @@
+﻿@model BooksListViewModel
+
+<html>
+    <body>
+        <div class="section-description">
+            <h2>Take a look at our book collection!</h2>
+            <p>You have to read them.</p>
+        </div>
+        @foreach (var book in Model.Books)
+        {
+            <partial name="_BookCard" model="book" />
+        }
+    </body>
+</html>

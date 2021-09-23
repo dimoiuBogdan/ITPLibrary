@@ -1,0 +1,10 @@
+﻿@model HomeViewModel
+
+<partial name="_Carousel" />
+
+<h2>Most popular books!</h2>
+
+@foreach (var book in Model.PopularBooks)
+{
+    <partial name="_BookCard" model="book" />
+}
