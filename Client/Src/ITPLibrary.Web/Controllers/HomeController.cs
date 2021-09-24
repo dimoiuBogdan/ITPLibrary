@@ -17,7 +17,7 @@ namespace ITPLibrary.Web.Controllers
         {
             var homeViewModel = new HomeViewModel
             {
-                PopularBooks = _bookService.GetPopularBooks().Result
+                PopularBooks = _bookService.GetPopularBooks().Result,
             };
 
             return View(homeViewModel);

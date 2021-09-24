@@ -1,5 +1,4 @@
 ﻿using ITPLibrary.Web.Core.Interfaces;
-using ITPLibrary.Web.Core.Models;
 using ITPLibrary.Web.Core.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,10 +15,7 @@ namespace ITPLibrary.Web
 
         public ViewResult List(string category)
         {
-            BooksListViewModel booksListViewModel = new BooksListViewModel();
-            booksListViewModel.Books = _bookRepository.GetAllBooks(category).Result;
-
-            return View(booksListViewModel);
+            return View(_bookRepository.GetAllBooks(category).Result);
         }
 
         public IActionResult Details(int id)

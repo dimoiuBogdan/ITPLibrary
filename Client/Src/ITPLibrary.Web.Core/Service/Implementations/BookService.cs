@@ -1,5 +1,6 @@
 ﻿using ITPLibrary.Web.Core.Interfaces;
 using ITPLibrary.Web.Core.Models;
+using ITPLibrary.Web.Core.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace ITPLibrary.Web.Core.Implementations
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
-        async Task<IEnumerable<Book>> IBookService.GetAllBooks(string categoryName)
+        async Task<BooksListViewModel> IBookService.GetAllBooks(string categoryName)
         {
             var uri = categoryName != null ? $"api/books?category={categoryName}" : "api/books";
 
@@ -27,7 +28,13 @@ namespace ITPLibrary.Web.Core.Implementations
 
             var deserializedResult = JsonConvert.DeserializeObject<IEnumerable<Book>>(json);
 
-            return deserializedResult;
+            var booksListViewModel = new BooksListViewModel()
+            {
+                Books = deserializedResult,
+                Title = categoryName == null ? "Welcome to our book list" : $"{categoryName} books"
+            };
+
+            return booksListViewModel;
         }
 
         async Task<IEnumerable<Book>> IBookService.GetPopularBooks()
