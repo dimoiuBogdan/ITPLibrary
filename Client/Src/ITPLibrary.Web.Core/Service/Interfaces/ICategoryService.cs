@@ -5,7 +5,6 @@ namespace ITPLibrary.Web.Core.Interfaces
 {
     public interface ICategoryService
     {
-        IEnumerable<Category> AllCategories { get; }
-        Category GetCategoryByName(string query);
+        IEnumerable<Category> AllCategories();
     }
 }

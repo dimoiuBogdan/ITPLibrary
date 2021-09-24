@@ -31,6 +31,10 @@ body {
     border-radius: 4px;
 }
 
+.dropdown-menu a{
+    color:black !important;
+}
+
 .caption {
     overflow: hidden;
 }
@@ -52,6 +56,11 @@ body {
     height:500px;
     object-fit:cover;
     object-position:center;
+}
+
+.navbar-nav{
+    display:flex;
+    align-items:center;
 }
 
 .addToCart {
@@ -84,7 +93,7 @@ footer {
 
 }
 
-.navbar .nav > li > a {
+.navbar .nav li a {
     font-size: 1.2em;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
     color:  white;

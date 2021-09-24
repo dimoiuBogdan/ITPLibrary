@@ -17,9 +17,9 @@ namespace ITPLibrary.Web.Core.Implementations
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
-        async Task<IEnumerable<Book>> IBookService.GetAllBooks(int? categoryId)
+        async Task<IEnumerable<Book>> IBookService.GetAllBooks(string categoryName)
         {
-            var uri = categoryId != null ? $"api/books/{categoryId}" : "api/books";
+            var uri = categoryName != null ? $"api/books?category={categoryName}" : "api/books";
 
             var result = await _httpClient.GetAsync(uri);
 

@@ -7,7 +7,7 @@ namespace ITPLibrary.Web.Core.Interfaces
 {
     public interface IBookService
     {
-        Task<IEnumerable<Book>> GetAllBooks([Optional] int? categoryId);
+        Task<IEnumerable<Book>> GetAllBooks([Optional] string category);
         Task<IEnumerable<Book>> GetPopularBooks();
         Task<Book> GetBookById(int bookId);
     }
