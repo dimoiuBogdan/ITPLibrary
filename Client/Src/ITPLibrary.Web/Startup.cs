@@ -1,5 +1,8 @@
+using ITPLibrary.Web.Core.HttpClients.Implementation;
+using ITPLibrary.Web.Core.HttpClients.Interface;
 using ITPLibrary.Web.Core.Implementations;
 using ITPLibrary.Web.Core.Interfaces;
+using ITPLibrary.Web.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,9 +19,11 @@ namespace ITPLibrary.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            //Aici se inregistreaza in container ca mai apoi sa le pot injecta in controller
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IBookService, BookService>();
             services.AddSingleton<JsonSerializer>();
-            services.AddHttpClient<IBookService, BookService>(x => { x.BaseAddress = new Uri("https://localhost:44359"); });
+            services.AddHttpClient<IITPLibraryApiHttpClient, ITPLibraryApiHttpClient>(x => { x.BaseAddress = new Uri("https://localhost:44359"); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

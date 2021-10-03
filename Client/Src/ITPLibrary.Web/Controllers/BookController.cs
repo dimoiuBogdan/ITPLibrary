@@ -1,31 +1,25 @@
-﻿using ITPLibrary.Web.Core.Interfaces;
-using ITPLibrary.Web.Core.ViewModels;
+﻿using ITPLibrary.Web.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ITPLibrary.Web
 {
     public class BookController : Controller
     {
-        private readonly IBookService _bookRepository;
+        private readonly IBookService _bookService;
 
-        public BookController(IBookService bookRepository)
+        public BookController(IBookService bookService)
         {
-            _bookRepository = bookRepository;
+            _bookService = bookService;
         }
 
         public ViewResult List(string category)
         {
-            return View(_bookRepository.GetAllBooks(category).Result);
+            return View(_bookService.GetAllBooks(category).Result);
         }
 
         public IActionResult Details(int id)
         {
-            var book = _bookRepository.GetBookById(id).Result;
-            if (book == null)
-            {
-                return NotFound();
-            }
-            return View(book);
+            return View(_bookService.GetBookById(id).Result);
         }
     }
 }

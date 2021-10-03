@@ -1,7 +1,9 @@
-﻿using ITPLibrary.Web.Core.Models;
+﻿using ITPLibrary.Api.Core.Dtos;
+using ITPLibrary.Api.Core.Services.Interfaces;
+using ITPLibrary.Api.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace ITPLibrary.Api.Controllers
 {
@@ -9,40 +11,37 @@ namespace ITPLibrary.Api.Controllers
     [Route("api/books")]
     public class BooksController : Controller
     {
-        public IEnumerable<Book> Books;
+        public IBookService _bookService;
 
-        public BooksController()
+        public BooksController(IBookService bookService)
         {
-            Books = new List<Book>
-                {
-                    new Book{BookId=1, CategoryName="Fantasy", Title="Hobbit", ThumbnailUrl="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fblogs.slj.com%2Fafuse8production%2Ffiles%2F2012%2F06%2FHobbit9.jpg&f=1&nofb=1", Description="An amazing fantasy book!", Author="JRR Tolkien", NumberOfPages=420, Price=50, IsPopular=true, Buyers=350},
-                    new Book{BookId=2, CategoryName="SF", Title="Interstellar", ThumbnailUrl="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.platekompaniet.no%2Fglobalassets%2Ffilmcover%2F2015%2Fmars%2Finterstellardvd.jpg&f=1&nofb=1", Description="To galaxy and beyond", Author="Cristopher Nolan", NumberOfPages=200, Price=30, IsPopular=true, Buyers=230},
-                    new Book{BookId=3, CategoryName="Drama", Title="Recapitulare bac", ThumbnailUrl="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.ytimg.com%2Fvi%2FYC_MgG7s378%2Fmaxresdefault.jpg&f=1&nofb=1", Description="Sadness", Author="Invatamantul", NumberOfPages=999, Price=999, IsPopular=true, Buyers=999},
-                    new Book{BookId=4, CategoryName="Fantasy", Title="Hobbit 2", ThumbnailUrl="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.ictv.org.uk%2Fwp-content%2Fuploads%2F2013%2F01%2FThe-Hobbit.jpg&f=1&nofb=1", Description="An amazing fantasy book! 2", Author="JRR Tolkien", NumberOfPages=320, Price=50, IsPopular=false, Buyers=350},
-                    new Book{BookId=5, CategoryName="SF", Title="Interstellar 2", ThumbnailUrl="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.pandatooth.com%2Fwp-content%2Fuploads%2F2016%2F03%2FInterstellar.jpg&f=1&nofb=1",Description="To galaxy and beyond 2", Author="Cristopher Nolan", NumberOfPages=300, Price=40, IsPopular=false, Buyers=230},
-                    new Book{BookId=6, CategoryName="Drama", Title="Recapitulare bac 2", ThumbnailUrl="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.christianartgifts.com%2Fproduct-images%2FKJV019_5--featureA.jpg%3Fresizeid%3D5%26resizeh%3D1200%26resizew%3D1200&f=1&nofb=1",Description="Sadness 2", Author="Invatamantul", NumberOfPages=399, Price=499, IsPopular=false, Buyers=999}
-                };
+            _bookService = bookService;
         }
 
-        public IEnumerable<Book> GetAllBooks(string category)
+        public async Task<IEnumerable<BookDto>> GetAllBooks(string category)
         {
-            if (category == null) 
-            {
-                return Books;
-            }
-            return Books.Where(book => book.CategoryName == category);
+            var books = await _bookService.GetAllBooks(category);
+            return books;
         }
 
         [HttpGet("popular")]
-        public IEnumerable<Book> GetPopularBooks()
+        public async Task<IEnumerable<BookDto>> GetPopularBooks()
         {
-            return Books.Where(book => book.IsPopular == true);
+            var books = await _bookService.GetPopularBooks();
+            return books;
         }
 
-        [HttpGet("{id}")]
-        public Book GetBookById(int id)
+        [HttpGet("{id}", Name = "GetBook")]
+        public async Task<BookDto> GetBookById(int id)
         {
-            return Books.FirstOrDefault(book => book.BookId == id);
+            var book = await _bookService.GetBookById(id);
+            return book;
+        }
+
+        [HttpPost]
+        public IActionResult PostBook([FromBody] Book book)
+        {
+            return CreatedAtRoute("GetBook", new { id = book.BookId }, book);
         }
     }
 }

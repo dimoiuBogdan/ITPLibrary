@@ -1,62 +1,62 @@
-﻿using ITPLibrary.Web.Core.Interfaces;
+﻿using ITPLibrary.Web.Core.HttpClients.Interface;
 using ITPLibrary.Web.Core.Models;
+using ITPLibrary.Web.Core.Service.Interfaces;
 using ITPLibrary.Web.Core.ViewModels;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ITPLibrary.Web.Core.Implementations
 {
     public class BookService : IBookService
     {
-        private readonly HttpClient _httpClient;
+        private readonly IITPLibraryApiHttpClient _client;
 
-        public BookService(HttpClient httpClient)
+        public BookService(IITPLibraryApiHttpClient client)
         {
-            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            _client = client;
         }
 
-        async Task<BooksListViewModel> IBookService.GetAllBooks(string categoryName)
+        // Oricand fac o metoda async ( sau ceva asyncron ) folosim tip Task<T>
+        public async Task<BooksListViewModel> GetAllBooks(string categoryName)
         {
             var uri = categoryName != null ? $"api/books?category={categoryName}" : "api/books";
 
-            var result = await _httpClient.GetAsync(uri);
-
-            var json = await result.Content.ReadAsStringAsync();
-
-            var deserializedResult = JsonConvert.DeserializeObject<IEnumerable<Book>>(json);
+            var books = await _client.GetMany<Book>(uri);
 
             var booksListViewModel = new BooksListViewModel()
             {
-                Books = deserializedResult,
+                Books = books,
                 Title = categoryName == null ? "Welcome to our book list" : $"{categoryName} books"
             };
 
             return booksListViewModel;
         }
 
-        async Task<IEnumerable<Book>> IBookService.GetPopularBooks()
+        public async Task<HomeViewModel> GetPopularBooks()
         {
-            var result = await _httpClient.GetAsync("api/books/popular");
+            var popularBooks = await _client.GetMany<Book>("api/books/popular");
 
-            var json = await result.Content.ReadAsStringAsync();
+            var homeViewModel = new HomeViewModel()
+            {
+                PopularBooks = popularBooks
+            };
 
-            var deserializedResult = JsonConvert.DeserializeObject<IEnumerable<Book>>(json);
-
-            return deserializedResult;
+            return homeViewModel;
         }
 
-        async Task<Book> IBookService.GetBookById(int bookId)
+        public async Task<Book> GetBookById(int bookId)
         {
-            var result = await _httpClient.GetAsync($"api/books/{bookId}");
+            var book = await _client.GetOne<Book>($"api/books/{bookId}");
 
-            var json = await result.Content.ReadAsStringAsync();
-
-            var deserializedResult = JsonConvert.DeserializeObject<Book>(json);
-
-            return deserializedResult;
+            return book;
         }
+
+        //public async Task<bool> PostBook(Book book)
+        //{
+        //    var post = await _client.Post(book, "api/books");
+
+        //    return post;
+        //}
     }
 }
+
+

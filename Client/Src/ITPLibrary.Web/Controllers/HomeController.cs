@@ -1,5 +1,4 @@
-﻿using ITPLibrary.Web.Core.Interfaces;
-using ITPLibrary.Web.Core.ViewModels;
+﻿using ITPLibrary.Web.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ITPLibrary.Web.Controllers
@@ -15,12 +14,7 @@ namespace ITPLibrary.Web.Controllers
 
         public IActionResult Index()
         {
-            var homeViewModel = new HomeViewModel
-            {
-                PopularBooks = _bookService.GetPopularBooks().Result,
-            };
-
-            return View(homeViewModel);
+            return View(_bookService.GetPopularBooks().Result);
         }
     }
 }
