@@ -1,5 +1,7 @@
 ﻿using ITPLibrary.Web.Core.Service.Interfaces;
+using ITPLibrary.Web.Core.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace ITPLibrary.Web
 {
@@ -19,7 +21,26 @@ namespace ITPLibrary.Web
 
         public IActionResult Details(int id)
         {
-            return View(_bookService.GetBookById(id).Result);
+            var result = _bookService.GetBookById(id).Result;
+
+            return View(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddBook(NewBookViewModel book)
+        {
+            var id = await _bookService.AddBook(book);
+
+            var result = RedirectToAction("details", new { id });
+
+            return result;
+        }
+
+        public async Task<IActionResult> Add()
+        {
+            var model = await _bookService.AddBookModel();
+
+            return View(model);
         }
     }
 }

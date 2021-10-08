@@ -1,7 +1,9 @@
+using AutoMapper;
 using ITPLibrary.Web.Core.HttpClients.Implementation;
 using ITPLibrary.Web.Core.HttpClients.Interface;
 using ITPLibrary.Web.Core.Implementations;
 using ITPLibrary.Web.Core.Interfaces;
+using ITPLibrary.Web.Core.Profiles;
 using ITPLibrary.Web.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,6 +26,15 @@ namespace ITPLibrary.Web
             services.AddScoped<IBookService, BookService>();
             services.AddSingleton<JsonSerializer>();
             services.AddHttpClient<IITPLibraryApiHttpClient, ITPLibraryApiHttpClient>(x => { x.BaseAddress = new Uri("https://localhost:44359"); });
+
+            // Auto Mapper Configurations
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

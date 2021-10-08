@@ -1,10 +1,10 @@
-﻿using ITPLibrary.Web.Core.Models;
+﻿using ITPLibrary.Api.Data.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ITPLibrary.Web.Core.Interfaces
+namespace ITPLibrary.Api.Data.Repositories.Interfaces
 {
-    public interface ICategoryService
+    public interface ICategoryRepository
     {
         Task<IEnumerable<Category>> GetCategories();
         Task<Category> GetCategoryById(int id);

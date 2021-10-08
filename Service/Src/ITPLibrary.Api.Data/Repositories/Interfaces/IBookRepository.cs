@@ -10,5 +10,7 @@ namespace ITPLibrary.Api.Data.Repositories.Interfaces
         Task<IEnumerable<Book>> GetBooks([Optional] string category);
         Task<IEnumerable<Book>> GetPopularBooks();
         Task<Book> GetBookById(int id);
+        Task<int> CreateNewBook(Book book);
+        Task<bool> DeleteBook(int id);
     }
 }

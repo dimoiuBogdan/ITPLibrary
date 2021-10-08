@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ITPLibrary.Api.Core.Dtos;
 using ITPLibrary.Api.Core.Services.Interfaces;
+using ITPLibrary.Api.Data.Entities;
 using ITPLibrary.Api.Data.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -37,6 +38,22 @@ namespace ITPLibrary.Api.Core.Services.Implementations
             var book = await _bookRepository.GetBookById(id);
 
             return _mapper.Map<BookDto>(book);
+        }
+
+        public async Task<int> CreateNewBook(BookCreateDto bookDto)
+        {
+            var book = new Book();
+
+            var id = await _bookRepository.CreateNewBook(_mapper.Map(bookDto, book));
+
+            return id;
+        }
+
+        public async Task<bool> DeleteBook(int id)
+        {
+            var bookToDelete = await _bookRepository.DeleteBook(id);
+
+            return bookToDelete;
         }
     }
 }

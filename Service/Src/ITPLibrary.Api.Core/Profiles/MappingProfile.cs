@@ -9,6 +9,7 @@ namespace ITPLibrary.Api.Core.Profiles
         public MappingProfile()
         {
             CreateMap<Book, BookDto>();
+            CreateMap<BookCreateDto, Book>();
         }
     }
 }

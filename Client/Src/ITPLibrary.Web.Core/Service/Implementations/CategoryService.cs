@@ -1,21 +1,33 @@
-﻿using ITPLibrary.Web.Core.Interfaces;
+﻿using ITPLibrary.Web.Core.HttpClients.Interface;
+using ITPLibrary.Web.Core.Interfaces;
 using ITPLibrary.Web.Core.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ITPLibrary.Web.Core.Implementations
 {
     public class CategoryService : ICategoryService
     {
-        public IEnumerable<Category> Categories =>
-            new List<Category>
-            {
-                new Category{CategoryId=1, CategoryName="Fantasy", Description="Fantasy books"},
-                new Category{CategoryId=2, CategoryName="SF", Description="SF books"},
-                new Category{CategoryId=3, CategoryName="Drama", Description="Drama books"},
-            };
-        IEnumerable<Category> ICategoryService.AllCategories()
+        private readonly IITPLibraryApiHttpClient _client;
+        public IEnumerable<Category> Categories;
+
+        public CategoryService(IITPLibraryApiHttpClient client)
         {
-            return Categories;
+            _client = client;
+        }
+
+        public async Task<IEnumerable<Category>> GetCategories()
+        {
+            var categories = await _client.GetMany<IEnumerable<Category>>("api/categories");
+
+            return categories;
+        }
+
+        public async Task<Category> GetCategoryById(int id)
+        {
+            var category = await _client.GetOne<Category>($"api/categories/{id}");
+
+            return category;
         }
     }
 }

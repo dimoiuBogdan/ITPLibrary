@@ -1,12 +1,15 @@
-﻿@model Book 
+﻿@model Book
 
-<div class="thumbnail">
-    <img src="@Model.ThumbnailUrl" alt="@Model.Title" />
-    <div class="caption-full">
-        <h3 class="pull-right">@Model.Price.ToString("c")</h3>
-        <h3>
-            @Model.Title
-        </h3>
-        <p>@Model.Description</p>
-    </div>
-</div>
+@if (Model != null)
+    {
+        <div class="thumbnail">
+            <img src="@Model.ThumbnailUrl" alt="@Model.Title" />
+            <div class="caption-full">
+                <h3 class="pull-right">@Model.Price.ToString("c")</h3>
+                <h3>
+                    @Model.Title
+                </h3>
+                <p>@Model.Description</p>
+            </div>
+        </div>
+    }

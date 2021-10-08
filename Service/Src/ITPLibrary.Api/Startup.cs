@@ -30,7 +30,10 @@ namespace ITPLibrary.Api
 
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IBookRepository, BookRepository>();
-            
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICategoryService, CategoryService>();
+
+
             // Auto Mapper Configurations
             var mapperConfig = new MapperConfiguration(mc =>
             {
@@ -41,7 +44,7 @@ namespace ITPLibrary.Api
             services.AddSingleton(mapper);
 
             services.AddDbContext<AppDbContext>(options => 
-            options.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = ITPLibrary; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False"));
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

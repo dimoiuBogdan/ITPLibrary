@@ -15,7 +15,7 @@ namespace ITPLibrary.Web.Controllers
 
         public IViewComponentResult Invoke()
         {
-            var categories = _categoryService.AllCategories().OrderBy(c => c.CategoryName);
+            var categories = _categoryService.GetCategories().Result.OrderBy(c => c.CategoryName);
             return View(categories);
         }
     }

@@ -1,7 +1,12 @@
-﻿using ITPLibrary.Web.Core.HttpClients.Interface;
+﻿using AutoMapper;
+using ITPLibrary.Web.Core.Dtos;
+using ITPLibrary.Web.Core.HttpClients.Interface;
 using ITPLibrary.Web.Core.Models;
 using ITPLibrary.Web.Core.Service.Interfaces;
 using ITPLibrary.Web.Core.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ITPLibrary.Web.Core.Implementations
@@ -9,10 +14,12 @@ namespace ITPLibrary.Web.Core.Implementations
     public class BookService : IBookService
     {
         private readonly IITPLibraryApiHttpClient _client;
+        private readonly IMapper _mapper;
 
-        public BookService(IITPLibraryApiHttpClient client)
+        public BookService(IITPLibraryApiHttpClient client, IMapper mapper)
         {
             _client = client;
+            _mapper = mapper;
         }
 
         // Oricand fac o metoda async ( sau ceva asyncron ) folosim tip Task<T>
@@ -20,7 +27,7 @@ namespace ITPLibrary.Web.Core.Implementations
         {
             var uri = categoryName != null ? $"api/books?category={categoryName}" : "api/books";
 
-            var books = await _client.GetMany<Book>(uri);
+            var books = await _client.GetMany<IEnumerable<Book>>(uri);
 
             var booksListViewModel = new BooksListViewModel()
             {
@@ -33,7 +40,7 @@ namespace ITPLibrary.Web.Core.Implementations
 
         public async Task<HomeViewModel> GetPopularBooks()
         {
-            var popularBooks = await _client.GetMany<Book>("api/books/popular");
+            var popularBooks = await _client.GetMany<IEnumerable<Book>>("api/books/popular");
 
             var homeViewModel = new HomeViewModel()
             {
@@ -50,12 +57,31 @@ namespace ITPLibrary.Web.Core.Implementations
             return book;
         }
 
-        //public async Task<bool> PostBook(Book book)
-        //{
-        //    var post = await _client.Post(book, "api/books");
+        public async Task<int> AddBook(NewBookViewModel book)
+        {
+            var bookCreateDto = new BookCreateDto();
 
-        //    return post;
-        //}
+            _mapper.Map(book, bookCreateDto);
+
+            var newBookId = await _client.Post<int, BookCreateDto>(bookCreateDto, "api/books");
+
+            return newBookId;
+        }
+
+        public async Task<NewBookViewModel> AddBookModel()
+        {
+            var categories = await _client.GetMany<IEnumerable<Category>>("api/categories");
+            var model = new NewBookViewModel()
+            {
+                Categories = new List<SelectListItem>(categories.Select(category => new SelectListItem()
+                {
+                    Text = category.CategoryName,
+                    Value = category.CategoryId.ToString()
+                }))
+            };
+
+            return model;
+        }
     }
 }
 

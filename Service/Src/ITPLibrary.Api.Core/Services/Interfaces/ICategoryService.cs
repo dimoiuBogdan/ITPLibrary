@@ -1,8 +1,8 @@
-﻿using ITPLibrary.Web.Core.Models;
+﻿using ITPLibrary.Api.Data.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ITPLibrary.Web.Core.Interfaces
+namespace ITPLibrary.Api.Core.Services.Interfaces
 {
     public interface ICategoryService
     {

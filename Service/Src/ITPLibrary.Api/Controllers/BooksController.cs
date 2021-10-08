@@ -1,6 +1,5 @@
 ﻿using ITPLibrary.Api.Core.Dtos;
 using ITPLibrary.Api.Core.Services.Interfaces;
-using ITPLibrary.Api.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,7 +23,7 @@ namespace ITPLibrary.Api.Controllers
             return books;
         }
 
-        [HttpGet("popular")]
+        [HttpGet("popular", Name = "GetPopularBooks")]
         public async Task<IEnumerable<BookDto>> GetPopularBooks()
         {
             var books = await _bookService.GetPopularBooks();
@@ -39,9 +38,25 @@ namespace ITPLibrary.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostBook([FromBody] Book book)
+        public async Task<IActionResult> CreateNewBook(BookCreateDto book)
         {
-            return CreatedAtRoute("GetBook", new { id = book.BookId }, book);
+            // De aici pleaca "book" populat cu datele din form
+            var id = await _bookService.CreateNewBook(book);
+
+            return Ok(id);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBook(int id)
+        {
+            var isOkay = await _bookService.DeleteBook(id);
+
+            if (isOkay)
+            {
+                return NoContent();
+            }
+
+            return NotFound();
         }
     }
 }

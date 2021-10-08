@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Service\Src\ITPLibrary.Api.Core\ITPLibrary.Api.Core.csproj" />
     <ProjectReference Include="..\ITPLibrary.Web.Core\ITPLibrary.Web.Core.csproj" />
   </ItemGroup>
 

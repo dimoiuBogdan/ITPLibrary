@@ -1,7 +1,7 @@
 ﻿using ITPLibrary.Web.Core.HttpClients.Interface;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ITPLibrary.Web.Core.HttpClients.Implementation
@@ -15,13 +15,13 @@ namespace ITPLibrary.Web.Core.HttpClients.Implementation
             _httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<T>> GetMany<T>(string uri)
+        public async Task<T> GetMany<T>(string uri)
         {
             var result = await _httpClient.GetAsync(uri);
 
             var json = await result.Content.ReadAsStringAsync();
 
-            var res = JsonConvert.DeserializeObject<IEnumerable<T>>(json);
+            var res = JsonConvert.DeserializeObject<T>(json);
 
             return res;
         }
@@ -37,18 +37,17 @@ namespace ITPLibrary.Web.Core.HttpClients.Implementation
             return res;
         }
 
-        //public async Task<bool> Post(object payload, string uri)
-        //{
-        //    HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(payload));
+        public async Task<TReturn> Post<TReturn, TConvert>(TConvert payload, string postUri)
+        {
+            var dtoAsString = JsonConvert.SerializeObject(payload);
 
-        //    var res = await _httpClient.PostAsync(uri, httpContent);
+            var content = new StringContent(dtoAsString, Encoding.UTF8, "application/json");
+            // Adauga id din BooksController ( API )
+            var result = await _httpClient.PostAsync(postUri, content);
 
-        //    if (res.IsSuccessStatusCode)
-        //    {
-        //        return true;
-        //    }
+            var json = await result.Content.ReadAsStringAsync();
 
-        //    return false;
-        //}
+            return JsonConvert.DeserializeObject<TReturn>(json);
+        }
     }
 }
