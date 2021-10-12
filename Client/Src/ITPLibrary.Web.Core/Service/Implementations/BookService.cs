@@ -7,6 +7,7 @@ using ITPLibrary.Web.Core.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ITPLibrary.Web.Core.Implementations
@@ -81,6 +82,13 @@ namespace ITPLibrary.Web.Core.Implementations
             };
 
             return model;
+        }
+
+        public async Task<bool> DeleteBook(int id)
+        {
+            var bookToDelete = await _client.Delete<bool>($"api/books/{id}");
+
+            return bookToDelete;
         }
     }
 }

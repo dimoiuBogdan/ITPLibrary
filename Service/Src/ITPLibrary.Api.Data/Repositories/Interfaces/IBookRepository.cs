@@ -12,5 +12,6 @@ namespace ITPLibrary.Api.Data.Repositories.Interfaces
         Task<Book> GetBookById(int id);
         Task<int> CreateNewBook(Book book);
         Task<bool> DeleteBook(int id);
+        Task<Book> EditBook(int id);
     }
 }

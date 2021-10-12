@@ -43,7 +43,7 @@ namespace ITPLibrary.Api.Core.Services.Implementations
         public async Task<int> CreateNewBook(BookCreateDto bookDto)
         {
             var book = new Book();
-
+            // Mapam bookDto la book ca sa aiba property de id
             var id = await _bookRepository.CreateNewBook(_mapper.Map(bookDto, book));
 
             return id;
@@ -54,6 +54,15 @@ namespace ITPLibrary.Api.Core.Services.Implementations
             var bookToDelete = await _bookRepository.DeleteBook(id);
 
             return bookToDelete;
+        }
+
+        public async Task<BookDto> EditBook(int id)
+        {
+            var bookDto = new BookDto();
+            
+            var bookToEdit = await _bookRepository.EditBook(id);
+
+            return _mapper.Map(bookToEdit, bookDto);
         }
     }
 }

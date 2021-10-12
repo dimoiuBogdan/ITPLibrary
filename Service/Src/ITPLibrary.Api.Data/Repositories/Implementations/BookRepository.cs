@@ -67,5 +67,16 @@ namespace ITPLibrary.Api.Data.Repositories.Implementations
 
             return false;
         }
+
+        public async Task<Book> EditBook(int id)
+        {
+            var bookToEdit = await _appDbContext.Books.FirstOrDefaultAsync(book => book.BookId == id);
+
+            //Update book here
+
+            _appDbContext.SaveChanges();
+
+            return bookToEdit;
+        }
     }
 }

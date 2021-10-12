@@ -12,5 +12,6 @@ namespace ITPLibrary.Api.Core.Services.Interfaces
         Task<BookDto> GetBookById(int bookId);
         Task<int> CreateNewBook(BookCreateDto book);
         Task<bool> DeleteBook(int id);
+        Task<BookDto> EditBook(int id);
     }
 }

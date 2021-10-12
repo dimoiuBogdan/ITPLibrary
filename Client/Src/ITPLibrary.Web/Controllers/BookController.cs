@@ -42,5 +42,15 @@ namespace ITPLibrary.Web
 
             return View(model);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteBook(int id)
+        {
+            await _bookService.DeleteBook(id);
+
+            var result = RedirectToAction("list");
+
+            return result;
+        }
     }
 }

@@ -49,5 +49,14 @@ namespace ITPLibrary.Web.Core.HttpClients.Implementation
 
             return JsonConvert.DeserializeObject<TReturn>(json);
         }
+
+        public async Task<T> Delete<T>(string uri)
+        {
+            var result = await _httpClient.DeleteAsync(uri);
+
+            var json = JsonConvert.SerializeObject(result.IsSuccessStatusCode.ToString());
+
+            return JsonConvert.DeserializeObject<T>(json);
+        }
     }
 }

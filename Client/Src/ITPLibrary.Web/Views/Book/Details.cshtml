@@ -10,6 +10,15 @@
                     @Model.Title
                 </h3>
                 <p>@Model.Description</p>
+                <div class="detail-buttons row">
+                    @using (Html.BeginForm("DeleteBook", "Book", new { id = Model.BookId }, FormMethod.Post))
+                    {
+                        <form action="" method="post">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    }
+                    <button type="submit" class="btn btn-warning">Edit</button>
+                </div>
             </div>
         </div>
     }

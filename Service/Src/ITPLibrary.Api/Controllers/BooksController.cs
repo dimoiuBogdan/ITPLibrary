@@ -58,5 +58,13 @@ namespace ITPLibrary.Api.Controllers
 
             return NotFound();
         }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> EditBook(int id)
+        {
+            var bookToEdit = await _bookService.EditBook(id);
+
+            return Ok(bookToEdit);
+        }
     }
 }

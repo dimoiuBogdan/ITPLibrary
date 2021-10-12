@@ -10,5 +10,6 @@ namespace ITPLibrary.Web.Core.HttpClients.Interface
         Task</*IEnumerable<*/T> GetMany<T>(string requestUri);
         Task<T> GetOne<T>(string requestUri);
         Task<TReturn> Post<TReturn, TConvert>(TConvert payload, string postUri);
+        Task<T> Delete<T>(string postUri);
     }
 }
