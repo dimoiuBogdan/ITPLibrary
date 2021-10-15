@@ -7,7 +7,6 @@ using ITPLibrary.Web.Core.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ITPLibrary.Web.Core.Implementations
@@ -72,16 +71,16 @@ namespace ITPLibrary.Web.Core.Implementations
         public async Task<NewBookViewModel> AddBookModel()
         {
             var categories = await _client.GetMany<IEnumerable<Category>>("api/categories");
-            var model = new NewBookViewModel()
-            {
-                Categories = new List<SelectListItem>(categories.Select(category => new SelectListItem()
-                {
-                    Text = category.CategoryName,
-                    Value = category.CategoryId.ToString()
-                }))
-            };
 
-            return model;
+            var res = new NewBookViewModel();
+
+            res.Categories = new List<SelectListItem>(categories.Select(category => new SelectListItem()
+            {
+                Text = category.CategoryName,
+                Value = category.CategoryId.ToString()
+            }));
+
+            return res;
         }
 
         public async Task<bool> DeleteBook(int id)
@@ -89,6 +88,49 @@ namespace ITPLibrary.Web.Core.Implementations
             var bookToDelete = await _client.Delete<bool>($"api/books/{id}");
 
             return bookToDelete;
+        }
+
+        public async Task<EditBookViewModel> EditBookModel(Book bookToEdit)
+        {
+            var categories = await _client.GetMany<IEnumerable<Category>>("api/categories");
+
+            var res = new EditBookViewModel();
+
+            if (bookToEdit.BookId != 0)
+                res.BookId = bookToEdit.BookId;
+            if (bookToEdit.Author != null)
+                res.Author = bookToEdit.Author;
+            if (bookToEdit.Category != null)
+                res.Category = bookToEdit.Category;
+            if (bookToEdit.Description != null)
+                res.Description = bookToEdit.Description;
+            if (bookToEdit.Title != null)
+                res.Title = bookToEdit.Title;
+            if (bookToEdit.Price != 0)
+                res.Price = (decimal)(bookToEdit.Price);
+            if (bookToEdit.ThumbnailUrl != null)
+                res.ThumbnailUrl = bookToEdit.ThumbnailUrl;
+            if (bookToEdit.NumberOfPages != 0)
+                res.NumberOfPages = (int)(bookToEdit.NumberOfPages);
+
+            res.Categories = new List<SelectListItem>(categories.Select(category => new SelectListItem()
+            {
+                Text = category.CategoryName,
+                Value = category.CategoryId.ToString()
+            }));
+
+            return res;
+        }
+
+        public async Task<Book> EditBook(NewBookViewModel book, int bookToEditId)
+        {
+            var bookCreateDto = new BookCreateDto();
+
+            _mapper.Map(book, bookCreateDto);
+
+            var editedBook = await _client.Patch<Book, BookCreateDto>(bookCreateDto, $"api/books/{bookToEditId}");
+
+            return editedBook;
         }
     }
 }

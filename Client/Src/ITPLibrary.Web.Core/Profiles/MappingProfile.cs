@@ -9,6 +9,7 @@ namespace ITPLibrary.Web.Core.Profiles
         public MappingProfile()
         {
             CreateMap<NewBookViewModel, BookCreateDto>();
+            CreateMap<EditBookViewModel, EditBookDto>();
         }
     }
 }

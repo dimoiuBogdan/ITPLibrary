@@ -1,4 +1,5 @@
-﻿using ITPLibrary.Api.Data.Data;
+﻿using AutoMapper;
+using ITPLibrary.Api.Data.Data;
 using ITPLibrary.Api.Data.Entities;
 using ITPLibrary.Api.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +13,12 @@ namespace ITPLibrary.Api.Data.Repositories.Implementations
     public class BookRepository : IBookRepository
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IMapper _mapper;
 
-        public BookRepository(AppDbContext appDbContext)
+        public BookRepository(AppDbContext appDbContext, IMapper mapper)
         {
             _appDbContext = appDbContext;
+            _mapper = mapper;
         }
 
         public async Task<Book> GetBookById(int id)
@@ -68,15 +71,13 @@ namespace ITPLibrary.Api.Data.Repositories.Implementations
             return false;
         }
 
-        public async Task<Book> EditBook(int id)
+        public async Task<Book> EditBook(Book editedBook, int id)
         {
-            var bookToEdit = await _appDbContext.Books.FirstOrDefaultAsync(book => book.BookId == id);
+            _appDbContext.Update(editedBook);
 
-            //Update book here
+            await _appDbContext.SaveChangesAsync();
 
-            _appDbContext.SaveChanges();
-
-            return bookToEdit;
+            return editedBook;
         }
     }
 }

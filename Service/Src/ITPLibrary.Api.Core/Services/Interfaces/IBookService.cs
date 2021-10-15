@@ -1,4 +1,5 @@
 ﻿using ITPLibrary.Api.Core.Dtos;
+using ITPLibrary.Api.Data.Entities;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -12,6 +13,6 @@ namespace ITPLibrary.Api.Core.Services.Interfaces
         Task<BookDto> GetBookById(int bookId);
         Task<int> CreateNewBook(BookCreateDto book);
         Task<bool> DeleteBook(int id);
-        Task<BookDto> EditBook(int id);
+        Task<BookDto> EditBook(BookEditDto book, int id);
     }
 }

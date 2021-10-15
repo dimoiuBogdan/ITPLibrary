@@ -116,6 +116,7 @@ footer {
 
 .detail-buttons{
     margin-top:10px;
+    display:flex !important;
 }
 
 .detail-buttons button{

@@ -56,13 +56,15 @@ namespace ITPLibrary.Api.Core.Services.Implementations
             return bookToDelete;
         }
 
-        public async Task<BookDto> EditBook(int id)
+        public async Task<BookDto> EditBook(BookEditDto editedBook, int id)
         {
-            var bookDto = new BookDto();
-            
-            var bookToEdit = await _bookRepository.EditBook(id);
+            var bookToEdit = await _bookRepository.GetBookById(id);
 
-            return _mapper.Map(bookToEdit, bookDto);
+             _mapper.Map(editedBook, bookToEdit);
+
+            var updatedBook = await _bookRepository.EditBook(bookToEdit, id);
+
+            return _mapper.Map<BookDto>(updatedBook);
         }
     }
 }

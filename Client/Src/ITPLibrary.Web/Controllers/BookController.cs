@@ -2,7 +2,6 @@
 using ITPLibrary.Web.Core.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-
 namespace ITPLibrary.Web
 {
     public class BookController : Controller
@@ -24,6 +23,25 @@ namespace ITPLibrary.Web
             var result = _bookService.GetBookById(id).Result;
 
             return View(result);
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var bookToEdit = _bookService.GetBookById(id).Result;
+
+            var model = await _bookService.EditBookModel(bookToEdit);
+
+            return View(model);
+        }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> EditBook(NewBookViewModel book, int id)
+        {
+            await _bookService.EditBook(book, id);
+
+            var result = RedirectToAction("details", new { id });
+
+            return result;
         }
 
         [HttpPost]

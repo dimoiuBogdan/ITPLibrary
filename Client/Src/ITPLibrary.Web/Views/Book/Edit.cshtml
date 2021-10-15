@@ -1,0 +1,50 @@
+﻿@model ITPLibrary.Web.Core.ViewModels.EditBookViewModel
+
+<html>
+<body>
+    @using (Html.BeginForm("EditBook", "Book", new { id = Model.BookId }, FormMethod.Post))
+
+    {
+        <h2>Edit book!</h2>
+        <form action="" method="post">
+            <div class="form-group">
+                <label>Title</label>
+                <input asp-for="@Model.Title" value="@Model.Title" class="form-control">
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Author</label>
+                <input asp-for="@Model.Author" value="@Model.Author" class="form-control">
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input asp-for="@Model.Description" value="@Model.Description" class="form-control">
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Number of pages</label>
+                <input type="number" value="@Model.NumberOfPages" asp-for="@Model.NumberOfPages" class="form-control">
+                <span asp-validation-for="NumberOfPages" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Thumbnail</label>
+                <input asp-for="@Model.ThumbnailUrl" value="@Model.ThumbnailUrl" class="form-control">
+                <span asp-validation-for="ThumbnailUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Price</label>
+                <input type="number" value="@Model.Price" asp-for="@Model.Price" class="form-control">
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                @* TODO Add selected category from model *@
+                <select asp-for="@Model.CategoryId" class="form-control" asp-items="@Model.Categories">
+                </select>
+            </div>
+            <button name="AddBook" type="submit" class="btn btn-primary add-button">Submit</button>
+        </form>
+    }
+</body>
+</html>

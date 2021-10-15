@@ -10,14 +10,16 @@
                     @Model.Title
                 </h3>
                 <p>@Model.Description</p>
-                <div class="detail-buttons row">
+                <div class="detail-buttons">
                     @using (Html.BeginForm("DeleteBook", "Book", new { id = Model.BookId }, FormMethod.Post))
                     {
                         <form action="" method="post">
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
                     }
-                    <button type="submit" class="btn btn-warning">Edit</button>
+
+                    <a class="btn btn-warning" asp-controller="Book" asp-action="Edit" asp-route-id="@Model.BookId">Edit</a>
+
                 </div>
             </div>
         </div>

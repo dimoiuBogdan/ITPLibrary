@@ -1,0 +1,33 @@
+﻿using ITPLibrary.Web.Core.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace ITPLibrary.Web.Core.ViewModels
+{
+    public class EditBookViewModel
+    {
+        public int BookId { get; set; }
+        [Required(ErrorMessage = "Title is required")]
+        [StringLength(50)]
+        public string Title { get; set; }
+        [Required(ErrorMessage = "Author is required")]
+        [StringLength(50)]
+        public string Author { get; set; }
+        [Required(ErrorMessage = "Description is required")]
+        [StringLength(500)]
+        public string Description { get; set; }
+        [Required(ErrorMessage = "Number of pages is required")]
+        public int NumberOfPages { get; set; }
+        [Required(ErrorMessage = "Thumbnail is required")]
+        [StringLength(100)]
+        public string ThumbnailUrl { get; set; }
+        [Required(ErrorMessage = "Price is required")]
+        public decimal Price { get; set; }
+        [Required]
+        public int CategoryId { get; set; }
+        [Required]
+        public Category Category { get;set; }
+        public List<SelectListItem> Categories { get; set; }
+    }
+}

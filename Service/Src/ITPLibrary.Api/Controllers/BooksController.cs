@@ -59,12 +59,14 @@ namespace ITPLibrary.Api.Controllers
             return NotFound();
         }
 
-        [HttpPatch("{id}")]
-        public async Task<IActionResult> EditBook(int id)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditBook(BookEditDto editedBook, int id)
         {
-            var bookToEdit = await _bookService.EditBook(id);
+            var bookToEdit = await _bookService.EditBook(editedBook, id);
 
             return Ok(bookToEdit);
         }
     }
 }
+
+// HTTP W3Schools

@@ -11,5 +11,6 @@ namespace ITPLibrary.Web.Core.HttpClients.Interface
         Task<T> GetOne<T>(string requestUri);
         Task<TReturn> Post<TReturn, TConvert>(TConvert payload, string postUri);
         Task<T> Delete<T>(string postUri);
+        Task<TReturn> Patch<TReturn, TConvert>(TConvert payload, string patchUri);
     }
 }

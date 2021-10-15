@@ -58,5 +58,18 @@ namespace ITPLibrary.Web.Core.HttpClients.Implementation
 
             return JsonConvert.DeserializeObject<T>(json);
         }
+
+        public async Task<TReturn> Patch<TReturn, TConvert>(TConvert payload, string postUri)
+        {
+            var dtoAsString = JsonConvert.SerializeObject(payload);
+
+            var content = new StringContent(dtoAsString, Encoding.UTF8, "application/json");
+
+            var result = await _httpClient.PutAsync(postUri, content);
+
+            var json = await result.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<TReturn>(json);
+        }
     }
 }

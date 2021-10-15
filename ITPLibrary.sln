@@ -13,13 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{3203
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{D2269218-6AE3-4786-BB51-09FAD212AD21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITPLibrary.Web.Core", "Client\Src\ITPLibrary.Web.Core\ITPLibrary.Web.Core.csproj", "{2DCF30DF-265B-4DA0-86BF-0AC2FAE978DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITPLibrary.Web.Core", "Client\Src\ITPLibrary.Web.Core\ITPLibrary.Web.Core.csproj", "{2DCF30DF-265B-4DA0-86BF-0AC2FAE978DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITPLibrary.Api", "Service\Src\ITPLibrary.Api\ITPLibrary.Api.csproj", "{A70BFBB3-A397-4A74-BCC9-C1664DFAC9DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITPLibrary.Api", "Service\Src\ITPLibrary.Api\ITPLibrary.Api.csproj", "{A70BFBB3-A397-4A74-BCC9-C1664DFAC9DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITPLibrary.Api.Core", "Service\Src\ITPLibrary.Api.Core\ITPLibrary.Api.Core.csproj", "{BA3DADE9-EAF8-40E7-B1B7-8C0ADB30C827}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITPLibrary.Api.Core", "Service\Src\ITPLibrary.Api.Core\ITPLibrary.Api.Core.csproj", "{BA3DADE9-EAF8-40E7-B1B7-8C0ADB30C827}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITPLibrary.Api.Data", "Service\Src\ITPLibrary.Api.Data\ITPLibrary.Api.Data.csproj", "{46BBCE79-EEF4-4BAE-8757-2C08BFA1E76D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITPLibrary.Api.Data", "Service\Src\ITPLibrary.Api.Data\ITPLibrary.Api.Data.csproj", "{46BBCE79-EEF4-4BAE-8757-2C08BFA1E76D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

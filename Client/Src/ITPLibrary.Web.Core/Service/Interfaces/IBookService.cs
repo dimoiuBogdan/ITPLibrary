@@ -14,5 +14,7 @@ namespace ITPLibrary.Web.Core.Service.Interfaces
         Task<int> AddBook(NewBookViewModel book);
         Task<NewBookViewModel> AddBookModel();
         Task<bool> DeleteBook(int id);
+        Task<Book> EditBook(NewBookViewModel book, int bookToEditId);
+        Task<EditBookViewModel> EditBookModel(Book bookToEdit);
     }
 }
