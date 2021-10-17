@@ -1,6 +1,8 @@
 ﻿using ITPLibrary.Web.Core.Service.Interfaces;
 using ITPLibrary.Web.Core.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 namespace ITPLibrary.Web
 {
@@ -37,21 +39,31 @@ namespace ITPLibrary.Web
         [HttpPost("{id}")]
         public async Task<IActionResult> EditBook(NewBookViewModel book, int id)
         {
-            await _bookService.EditBook(book, id);
+            if (ModelState.IsValid)
+            {
+                await _bookService.EditBook(book, id);
 
-            var result = RedirectToAction("details", new { id });
+                var result = RedirectToAction("details", new { id });
 
-            return result;
+                return result;
+            }
+            // Error
+            return await Edit(id);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddBook(NewBookViewModel book)
         {
-            var id = await _bookService.AddBook(book);
+            if (ModelState.IsValid)
+            {
+                var id = await _bookService.AddBook(book);
 
-            var result = RedirectToAction("details", new { id });
+                var result = RedirectToAction("details", new { id });
 
-            return result;
+                return result;
+            }
+            // Error
+            return await Add();
         }
 
         public async Task<IActionResult> Add()
