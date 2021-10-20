@@ -6,7 +6,7 @@ namespace ITPLibrary.Web.Core.Interfaces
 {
     public interface ICategoryService
     {
-        Task<IEnumerable<Category>> GetCategories();
-        Task<Category> GetCategoryById(int id);
+        Task<IEnumerable<CategoryModel>> GetCategories();
+        Task<CategoryModel> GetCategoryById(int id);
     }
 }

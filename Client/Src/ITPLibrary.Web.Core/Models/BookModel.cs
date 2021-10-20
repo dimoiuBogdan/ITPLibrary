@@ -1,6 +1,6 @@
 ﻿namespace ITPLibrary.Web.Core.Models
 {
-    public class Book
+    public class BookModel
     {
         public int BookId { get; set; }
         public string Title { get; set; }
@@ -11,6 +11,7 @@
         public int Buyers { get; set; }
         public decimal Price { get; set; }
         public bool IsPopular { get; set; }
-        public Category Category { get; set; }
+        public string CategoryId { get; set; }
+        public CategoryModel Category { get; set; }
     }
 }

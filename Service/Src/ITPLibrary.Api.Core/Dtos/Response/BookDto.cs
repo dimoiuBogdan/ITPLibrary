@@ -11,6 +11,7 @@
         public int Buyers { get; set; }
         public decimal Price { get; set; }
         public bool IsPopular { get; set; }
+        public string CategoryId { get; set; }
         public CategoryDto Category { get; set; }
     }
 }

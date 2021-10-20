@@ -30,7 +30,8 @@ namespace ITPLibrary.Api.Data.Repositories.Implementations
         {
             if (category != null)
             {
-                return await _appDbContext.Books.Where(book => book.Category.CategoryName == category).ToListAsync();
+                var books = await _appDbContext.Books.Where(book => book.Category.CategoryName == category).ToListAsync();
+                return books;
             }
             return await _appDbContext.Books.ToListAsync();
         }

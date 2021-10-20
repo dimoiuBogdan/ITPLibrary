@@ -19,19 +19,19 @@ namespace ITPLibrary.Api.Data.Data
 
             modelBuilder.Entity<Category>().HasData(new Category()
             {
-                CategoryId = 1,
+                CategoryId = "1",
                 CategoryName = "Fantasy"
             });
 
             modelBuilder.Entity<Category>().HasData(new Category()
             {
-                CategoryId = 2,
+                CategoryId = "2",
                 CategoryName = "SF"
             });
 
             modelBuilder.Entity<Category>().HasData(new Category()
             {
-                CategoryId = 3,
+                CategoryId = "3",
                 CategoryName = "Drama"
             });
 
@@ -46,7 +46,7 @@ namespace ITPLibrary.Api.Data.Data
                 Price = 50,
                 IsPopular = true,
                 Buyers = 350,
-                CategoryId=1
+                CategoryId="1"
             });
 
             modelBuilder.Entity<Book>().HasData(new Book()
@@ -60,7 +60,7 @@ namespace ITPLibrary.Api.Data.Data
                 Price = 30,
                 IsPopular = true,
                 Buyers = 230,
-                CategoryId = 2
+                CategoryId = "1"
             });
 
             modelBuilder.Entity<Book>().HasData(new Book()
@@ -74,7 +74,7 @@ namespace ITPLibrary.Api.Data.Data
                 Price = 999,
                 IsPopular = true,
                 Buyers = 999,
-                CategoryId = 3
+                CategoryId = "3"
             });
 
             modelBuilder.Entity<Book>().HasData(new Book()
@@ -88,7 +88,7 @@ namespace ITPLibrary.Api.Data.Data
                 Price = 50,
                 IsPopular = false,
                 Buyers = 350,
-                CategoryId = 1
+                CategoryId = "1"
             });
 
             modelBuilder.Entity<Book>().HasData(new Book()
@@ -102,7 +102,7 @@ namespace ITPLibrary.Api.Data.Data
                 Price = 40,
                 IsPopular = false,
                 Buyers = 230,
-                CategoryId = 2
+                CategoryId = "2"
             });
 
             modelBuilder.Entity<Book>().HasData(new Book()
@@ -116,7 +116,7 @@ namespace ITPLibrary.Api.Data.Data
                 Price = 499,
                 IsPopular = false,
                 Buyers = 999,
-                CategoryId = 3
+                CategoryId = "3"
             });
         }
 

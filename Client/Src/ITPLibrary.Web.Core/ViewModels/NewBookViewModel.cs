@@ -18,7 +18,7 @@ namespace ITPLibrary.Web.Core.ViewModels
         public string ThumbnailUrl { get; set; }
         [Required(ErrorMessage = "Price is required")]
         public decimal Price { get; set; }
-        public int CategoryId { get; set; }
+        public string CategoryId { get; set; }
         public List<SelectListItem> Categories { get; set; }
     }
 }

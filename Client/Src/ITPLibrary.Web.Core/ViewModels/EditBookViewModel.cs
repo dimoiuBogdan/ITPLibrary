@@ -1,5 +1,4 @@
-﻿using ITPLibrary.Web.Core.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -20,10 +19,7 @@ namespace ITPLibrary.Web.Core.ViewModels
         public string ThumbnailUrl { get; set; }
         [Required(ErrorMessage = "Price is required")]
         public decimal Price { get; set; }
-        [Required]
-        public int CategoryId { get; set; }
-        [Required]
-        public Category Category { get;set; }
+        public string CategoryId { get; set; }
         public List<SelectListItem> Categories { get; set; }
     }
 }

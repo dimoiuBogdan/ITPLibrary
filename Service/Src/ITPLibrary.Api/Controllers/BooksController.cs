@@ -60,7 +60,7 @@ namespace ITPLibrary.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditBook(BookEditDto editedBook, int id)
+        public async Task<IActionResult> EditBook(int id, BookEditDto editedBook)
         {
             var bookToEdit = await _bookService.EditBook(editedBook, id);
 

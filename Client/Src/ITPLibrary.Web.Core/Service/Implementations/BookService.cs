@@ -5,6 +5,7 @@ using ITPLibrary.Web.Core.Models;
 using ITPLibrary.Web.Core.Service.Interfaces;
 using ITPLibrary.Web.Core.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace ITPLibrary.Web.Core.Implementations
         {
             var uri = categoryName != null ? $"api/books?category={categoryName}" : "api/books";
 
-            var books = await _client.GetMany<IEnumerable<Book>>(uri);
+            var books = await _client.GetMany<IEnumerable<BookModel>>(uri);
 
             var booksListViewModel = new BooksListViewModel()
             {
@@ -40,7 +41,7 @@ namespace ITPLibrary.Web.Core.Implementations
 
         public async Task<HomeViewModel> GetPopularBooks()
         {
-            var popularBooks = await _client.GetMany<IEnumerable<Book>>("api/books/popular");
+            var popularBooks = await _client.GetMany<IEnumerable<BookModel>>("api/books/popular");
 
             var homeViewModel = new HomeViewModel()
             {
@@ -50,9 +51,9 @@ namespace ITPLibrary.Web.Core.Implementations
             return homeViewModel;
         }
 
-        public async Task<Book> GetBookById(int bookId)
+        public async Task<BookModel> GetBookById(int bookId)
         {
-            var book = await _client.GetOne<Book>($"api/books/{bookId}");
+            var book = await _client.GetOne<BookModel>($"api/books/{bookId}");
 
             return book;
         }
@@ -70,65 +71,50 @@ namespace ITPLibrary.Web.Core.Implementations
 
         public async Task<NewBookViewModel> AddBookModel()
         {
-            var categories = await _client.GetMany<IEnumerable<Category>>("api/categories");
+            var categories = await _client.GetMany<IEnumerable<CategoryModel>>("api/categories");
 
-            var res = new NewBookViewModel();
+            var newBookViewModel = new NewBookViewModel();
 
-            res.Categories = new List<SelectListItem>(categories.Select(category => new SelectListItem()
+            newBookViewModel.Categories = new List<SelectListItem>(categories.Select(category => new SelectListItem()
             {
                 Text = category.CategoryName,
                 Value = category.CategoryId.ToString()
             }));
 
-            return res;
+            return newBookViewModel;
         }
 
         public async Task<bool> DeleteBook(int id)
         {
-            var bookToDelete = await _client.Delete<bool>($"api/books/{id}");
+            var isBookDeleted = await _client.Delete<bool>($"api/books/{id}");
 
-            return bookToDelete;
+            return isBookDeleted;
         }
-
-        public async Task<EditBookViewModel> EditBookModel(Book bookToEdit)
+        
+        public async Task<EditBookViewModel> EditBookModel(BookModel bookToEdit)
         {
-            var categories = await _client.GetMany<IEnumerable<Category>>("api/categories");
+            var categories = await _client.GetMany<IEnumerable<CategoryModel>>("api/categories");
 
-            var res = new EditBookViewModel();
+            var editBookViewModel = new EditBookViewModel();
 
-            if (bookToEdit.BookId != 0)
-                res.BookId = bookToEdit.BookId;
-            if (bookToEdit.Author != null)
-                res.Author = bookToEdit.Author;
-            if (bookToEdit.Category != null)
-                res.Category = bookToEdit.Category;
-            if (bookToEdit.Description != null)
-                res.Description = bookToEdit.Description;
-            if (bookToEdit.Title != null)
-                res.Title = bookToEdit.Title;
-            if (bookToEdit.Price != 0)
-                res.Price = (decimal)(bookToEdit.Price);
-            if (bookToEdit.ThumbnailUrl != null)
-                res.ThumbnailUrl = bookToEdit.ThumbnailUrl;
-            if (bookToEdit.NumberOfPages != 0)
-                res.NumberOfPages = (int)(bookToEdit.NumberOfPages);
+            _mapper.Map(bookToEdit, editBookViewModel);
 
-            res.Categories = new List<SelectListItem>(categories.Select(category => new SelectListItem()
+            editBookViewModel.Categories = new List<SelectListItem>(categories.Select(category => new SelectListItem()
             {
                 Text = category.CategoryName,
                 Value = category.CategoryId.ToString()
             }));
 
-            return res;
+            return editBookViewModel;
         }
 
-        public async Task<Book> EditBook(NewBookViewModel book, int bookToEditId)
+        public async Task<BookModel> EditBook(EditBookViewModel book, int bookToEditId)
         {
-            var bookCreateDto = new BookCreateDto();
+            var bookEditDto = new BookEditDto();
 
-            _mapper.Map(book, bookCreateDto);
+            _mapper.Map(book, bookEditDto);
 
-            var editedBook = await _client.Patch<Book, BookCreateDto>(bookCreateDto, $"api/books/{bookToEditId}");
+            var editedBook = await _client.Patch<BookModel, BookEditDto>(bookEditDto, $"api/books/{bookToEditId}");
 
             return editedBook;
         }

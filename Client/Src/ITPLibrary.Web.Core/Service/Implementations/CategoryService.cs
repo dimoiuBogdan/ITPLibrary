@@ -9,23 +9,23 @@ namespace ITPLibrary.Web.Core.Implementations
     public class CategoryService : ICategoryService
     {
         private readonly IITPLibraryApiHttpClient _client;
-        public IEnumerable<Category> Categories;
+        public IEnumerable<CategoryModel> Categories;
 
         public CategoryService(IITPLibraryApiHttpClient client)
         {
             _client = client;
         }
 
-        public async Task<IEnumerable<Category>> GetCategories()
+        public async Task<IEnumerable<CategoryModel>> GetCategories()
         {
-            var categories = await _client.GetMany<IEnumerable<Category>>("api/categories");
+            var categories = await _client.GetMany<IEnumerable<CategoryModel>>("api/categories");
 
             return categories;
         }
 
-        public async Task<Category> GetCategoryById(int id)
+        public async Task<CategoryModel> GetCategoryById(int id)
         {
-            var category = await _client.GetOne<Category>($"api/categories/{id}");
+            var category = await _client.GetOne<CategoryModel>($"api/categories/{id}");
 
             return category;
         }

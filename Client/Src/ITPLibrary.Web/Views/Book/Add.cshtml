@@ -2,41 +2,50 @@
 
 <html>
 <body>
-    @using (Html.BeginForm("AddBook", "Book", FormMethod.Post))
+    @if (Model != null)
     {
-        <h2>Add a new book!</h2>
-        <form action="" method="post">
-            <div class="form-group">
-                <label>Title</label>
-                <input asp-for="@Model.Title" class="form-control">
-            </div>
-            <div class="form-group">
-                <label>Author</label>
-                <input asp-for="@Model.Author" class="form-control">
-            </div>
-            <div class="form-group">
-                <label>Description</label>
-                <input asp-for="@Model.Description" class="form-control">
-            </div>
-            <div class="form-group">
-                <label>Number of pages</label>
-                <input type="number" asp-for="@Model.NumberOfPages" class="form-control">
-            </div>
-            <div class="form-group">
-                <label>Thumbnail</label>
-                <input asp-for="@Model.ThumbnailUrl" class="form-control">
-            </div>
-            <div class="form-group">
-                <label>Price</label>
-                <input type="number" asp-for="@Model.Price" class="form-control">
-            </div>
-            <div class="form-group">
-                <label>Category</label>
-                <select asp-for="@Model.CategoryId" class="form-control" asp-items="@Model.Categories">
-                </select>
-            </div>
-            <button name="AddBook" type="submit" class="btn btn-primary add-button">Submit</button>
-        </form>            
+        @using (Html.BeginForm("AddBook", "Book", FormMethod.Post))
+        {
+            <h2>Add a new book!</h2>
+            <form action="" method="post">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input asp-for="@Model.Title" class="form-control">
+                    <span asp-validation-for="@Model.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Author</label>
+                    <input asp-for="@Model.Author" class="form-control">
+                    <span asp-validation-for="@Model.Author" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input asp-for="@Model.Description" class="form-control">
+                    <span asp-validation-for="@Model.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Number of pages</label>
+                    <input type="number" asp-for="@Model.NumberOfPages" class="form-control">
+                    <span asp-validation-for="@Model.NumberOfPages" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Thumbnail</label>
+                    <input asp-for="@Model.ThumbnailUrl" class="form-control">
+                    <span asp-validation-for="@Model.ThumbnailUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" asp-for="@Model.Price" class="form-control">
+                    <span asp-validation-for="@Model.Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select asp-for="@Model.CategoryId" class="form-control" asp-items="@Model.Categories">
+                    </select>
+                </div>
+                <button name="AddBook" type="submit" class="btn btn-primary add-button">Submit</button>
+            </form>
+            }        
     }
 </body>
 </html>

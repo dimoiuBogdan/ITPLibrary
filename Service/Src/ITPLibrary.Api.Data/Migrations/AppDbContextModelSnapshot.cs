@@ -31,8 +31,8 @@ namespace ITPLibrary.Api.Data.Migrations
                     b.Property<int>("Buyers")
                         .HasColumnType("int");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                    b.Property<string>("CategoryId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -64,7 +64,7 @@ namespace ITPLibrary.Api.Data.Migrations
                             BookId = 1,
                             Author = "JRR Tolkien",
                             Buyers = 350,
-                            CategoryId = 1,
+                            CategoryId = "1",
                             Description = "An amazing fantasy book!",
                             IsPopular = true,
                             NumberOfPages = 420,
@@ -77,7 +77,7 @@ namespace ITPLibrary.Api.Data.Migrations
                             BookId = 2,
                             Author = "Cristopher Nolan",
                             Buyers = 230,
-                            CategoryId = 2,
+                            CategoryId = "1",
                             Description = "To galaxy and beyond",
                             IsPopular = true,
                             NumberOfPages = 200,
@@ -90,7 +90,7 @@ namespace ITPLibrary.Api.Data.Migrations
                             BookId = 3,
                             Author = "Invatamantul",
                             Buyers = 999,
-                            CategoryId = 3,
+                            CategoryId = "3",
                             Description = "Sadness",
                             IsPopular = true,
                             NumberOfPages = 999,
@@ -103,7 +103,7 @@ namespace ITPLibrary.Api.Data.Migrations
                             BookId = 4,
                             Author = "JRR Tolkien",
                             Buyers = 350,
-                            CategoryId = 1,
+                            CategoryId = "1",
                             Description = "An amazing fantasy book! 2",
                             IsPopular = false,
                             NumberOfPages = 320,
@@ -116,7 +116,7 @@ namespace ITPLibrary.Api.Data.Migrations
                             BookId = 5,
                             Author = "Cristopher Nolan",
                             Buyers = 230,
-                            CategoryId = 2,
+                            CategoryId = "2",
                             Description = "To galaxy and beyond 2",
                             IsPopular = false,
                             NumberOfPages = 300,
@@ -129,7 +129,7 @@ namespace ITPLibrary.Api.Data.Migrations
                             BookId = 6,
                             Author = "Invatamantul",
                             Buyers = 999,
-                            CategoryId = 3,
+                            CategoryId = "3",
                             Description = "Sadness 2",
                             IsPopular = false,
                             NumberOfPages = 399,
@@ -141,10 +141,8 @@ namespace ITPLibrary.Api.Data.Migrations
 
             modelBuilder.Entity("ITPLibrary.Api.Data.Entities.Category", b =>
                 {
-                    b.Property<int>("CategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("CategoryId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CategoryName")
                         .HasColumnType("nvarchar(max)");
@@ -156,17 +154,17 @@ namespace ITPLibrary.Api.Data.Migrations
                     b.HasData(
                         new
                         {
-                            CategoryId = 1,
+                            CategoryId = "1",
                             CategoryName = "Fantasy"
                         },
                         new
                         {
-                            CategoryId = 2,
+                            CategoryId = "2",
                             CategoryName = "SF"
                         },
                         new
                         {
-                            CategoryId = 3,
+                            CategoryId = "3",
                             CategoryName = "Drama"
                         });
                 });
@@ -175,9 +173,7 @@ namespace ITPLibrary.Api.Data.Migrations
                 {
                     b.HasOne("ITPLibrary.Api.Data.Entities.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
                 });
 #pragma warning restore 612, 618
         }

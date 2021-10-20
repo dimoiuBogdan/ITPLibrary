@@ -24,7 +24,7 @@ namespace ITPLibrary.Api.Data.Repositories.Implementations
 
         public async Task<Category> GetCategoryById(int id)
         {
-            return await _appDbContext.Categories.FirstOrDefaultAsync(category => category.CategoryId == id);
+            return await _appDbContext.Categories.FirstOrDefaultAsync(category => category.CategoryId == id.ToString());
         }
     }
 }

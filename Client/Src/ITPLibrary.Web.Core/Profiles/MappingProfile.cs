@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ITPLibrary.Web.Core.Dtos;
+using ITPLibrary.Web.Core.Models;
 using ITPLibrary.Web.Core.ViewModels;
 
 namespace ITPLibrary.Web.Core.Profiles
@@ -9,7 +10,8 @@ namespace ITPLibrary.Web.Core.Profiles
         public MappingProfile()
         {
             CreateMap<NewBookViewModel, BookCreateDto>();
-            CreateMap<EditBookViewModel, EditBookDto>();
+            CreateMap<EditBookViewModel, BookEditDto>();
+            CreateMap<BookModel, EditBookViewModel>();
         }
     }
 }

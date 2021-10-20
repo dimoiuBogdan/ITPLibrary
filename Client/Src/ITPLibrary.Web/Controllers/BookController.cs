@@ -1,8 +1,6 @@
 ﻿using ITPLibrary.Web.Core.Service.Interfaces;
 using ITPLibrary.Web.Core.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 namespace ITPLibrary.Web
 {
@@ -17,14 +15,16 @@ namespace ITPLibrary.Web
 
         public ViewResult List(string category)
         {
-            return View(_bookService.GetAllBooks(category).Result);
+            var books = _bookService.GetAllBooks(category).Result;
+
+            return View(books);
         }
 
         public IActionResult Details(int id)
         {
-            var result = _bookService.GetBookById(id).Result;
+            var book = _bookService.GetBookById(id).Result;
 
-            return View(result);
+            return View(book);
         }
 
         public async Task<IActionResult> Edit(int id)
@@ -37,18 +37,17 @@ namespace ITPLibrary.Web
         }
 
         [HttpPost("{id}")]
-        public async Task<IActionResult> EditBook(NewBookViewModel book, int id)
+        public async Task<IActionResult> EditBook(int id, EditBookViewModel book)
         {
             if (ModelState.IsValid)
             {
                 await _bookService.EditBook(book, id);
 
-                var result = RedirectToAction("details", new { id });
-
-                return result;
+                return RedirectToAction("details", new { id });
             }
-            // Error
-            return await Edit(id);
+
+            var bookToEdit = _bookService.GetBookById(id).Result;
+            return View("Edit", await _bookService.EditBookModel(bookToEdit));
         }
 
         [HttpPost]
@@ -58,12 +57,9 @@ namespace ITPLibrary.Web
             {
                 var id = await _bookService.AddBook(book);
 
-                var result = RedirectToAction("details", new { id });
-
-                return result;
+                return RedirectToAction("details", new { id });
             }
-            // Error
-            return await Add();
+            return View("Add", await _bookService.AddBookModel());
         }
 
         public async Task<IActionResult> Add()
@@ -78,9 +74,7 @@ namespace ITPLibrary.Web
         {
             await _bookService.DeleteBook(id);
 
-            var result = RedirectToAction("list");
-
-            return result;
+            return RedirectToAction("list"); ;
         }
     }
 }

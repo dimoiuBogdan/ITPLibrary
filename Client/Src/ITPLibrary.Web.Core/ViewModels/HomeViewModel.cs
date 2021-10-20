@@ -5,6 +5,6 @@ namespace ITPLibrary.Web.Core.ViewModels
 {
     public class HomeViewModel
     {
-        public IEnumerable<Book> PopularBooks { get; set; }
+        public IEnumerable<BookModel> PopularBooks { get; set; }
     }
 }

@@ -1,8 +1,6 @@
-﻿using ITPLibrary.Api.Data.Entities;
-
-namespace ITPLibrary.Api.Core.Dtos
+﻿namespace ITPLibrary.Api.Core.Dtos
 {
-    public class BookEditDto
+    public class BookCreateDto
     {
         public string Title { get; set; }
         public string Author { get; set; }
@@ -10,5 +8,7 @@ namespace ITPLibrary.Api.Core.Dtos
         public int NumberOfPages { get; set; }
         public string ThumbnailUrl { get; set; }
         public decimal Price { get; set; }
+        // Adus din MVC
+        public string CategoryId { get; set; }
     }
 }
